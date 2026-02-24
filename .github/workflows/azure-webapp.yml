@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:   # allows manual trigger from Actions tab
 
 jobs:
   build-and-deploy:
@@ -30,6 +31,6 @@ jobs:
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: YOUR_AZURE_WEBAPP_NAME
+        app-name: YOUR_AZURE_WEBAPP_NAME   # replace with your Azure WebApp name
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
         images: 'mlops-api'
