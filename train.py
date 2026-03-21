@@ -10,15 +10,15 @@ data = pd.read_csv("iris_data.csv")
 X = data.drop("target", axis=1)
 y = data["target"]
 
-Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.2)
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.2, random_state=42)
 
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
-    ("model", LogisticRegression())
+    ("model", LogisticRegression(max_iter=200))
 ])
 
-param_grid = {"model__C": [0.1, 1, 10]}
-grid = GridSearchCV(pipeline, param_grid, cv=2)
+param_grid = {"model__C": [0.01, 0.1, 1, 10, 100]}
+grid = GridSearchCV(pipeline, param_grid, cv=3)
 
 mlflow.start_run()
 grid.fit(Xtrain, ytrain)
